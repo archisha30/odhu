@@ -1,0 +1,26 @@
+# Secrets - never commit real keys
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Runtime data (SQLite DB, cached audio, uploaded images)
+backend/data/*
+!backend/data/.gitkeep
+
+# Smoke test output
+scripts/output/
+
+# Node / Vite
+node_modules/
+dist/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/*

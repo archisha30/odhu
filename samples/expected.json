@@ -1,0 +1,41 @@
+{
+  "_comment": "Correct answers for each sample image. Used to check Gemini's extraction by hand or in tests. All data is fake. Dates are YYYY-MM-DD, amounts are rupees. null means the document does not contain that field, and the app must not invent one.",
+  "01_electricity_bill_kn.png": {
+    "document_type": "electricity_bill",
+    "sender": "Namma Vidyut Supply Corporation",
+    "amount_due": 1179.00,
+    "due_date": "2026-11-19",
+    "account_holder_name": "Sarojamma H"
+  },
+  "02_electricity_bill_hi.png": {
+    "document_type": "electricity_bill",
+    "sender": "Gram Urja Vitran Nigam",
+    "amount_due": 1842.00,
+    "due_date": "2026-10-25",
+    "account_holder_name": "Rameshwar Prasad"
+  },
+  "03_bank_letter_en.png": {
+    "document_type": "bank_letter",
+    "sender": "Sahyadri Grameena Bank",
+    "amount_due": null,
+    "due_date": "2026-11-30",
+    "account_holder_name": "Basavaraj Patil"
+  },
+  "04_bank_sms_screenshot.png": {
+    "document_type": "bank_letter",
+    "sender": "Sahyadri Grameena Bank",
+    "amount_due": 3250.00,
+    "due_date": "2026-11-05",
+    "account_holder_name": null
+  },
+  "05_property_tax_notice_kn.png": {
+    "document_type": "official_notice",
+    "sender": "Madari City Corporation",
+    "amount_due": 2460.00,
+    "due_date": "2026-12-31",
+    "account_holder_name": "Shivanna B"
+  },
+  "06_blurry_photo.png": {
+    "_expect": "low confidence: the app should ask for a clearer photo"
+  }
+}

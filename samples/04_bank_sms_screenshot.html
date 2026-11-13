@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample bank SMS screenshot</title>
+<style>
+  /* Looks like a phone's SMS app. Rendered at phone size. */
+  body {
+    margin: 0;
+    width: 420px;
+    background: #f2f2f2;
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  }
+  .status { background: #1f1f1f; color: #fff; font-size: 13px; padding: 6px 14px; display: flex; justify-content: space-between; }
+  .topbar { background: #fff; padding: 14px; border-bottom: 1px solid #ddd; font-weight: 600; font-size: 17px; }
+  .topbar small { display: block; font-weight: 400; color: #777; font-size: 12px; }
+  .day { text-align: center; color: #777; font-size: 12px; margin: 14px 0 6px; }
+  .bubble { background: #fff; margin: 6px 14px; padding: 12px 14px; border-radius: 16px 16px 16px 4px; font-size: 15px; line-height: 1.45; box-shadow: 0 1px 2px rgba(0,0,0,0.1); max-width: 340px; }
+  .time { display: block; text-align: right; font-size: 11px; color: #888; margin-top: 4px; }
+  .fake { text-align: center; color: rgba(200,0,0,0.5); font-size: 11px; padding: 10px; }
+</style>
+</head>
+<body>
+<!-- FAKE DATA: the bank, sender ID and account numbers are all made up. -->
+<div class="status"><span>9:41</span><span>4G ▮▮▮</span></div>
+<div class="topbar">VM-SGBANK<small>Sahyadri Grameena Bank (Fictional)</small></div>
+
+<div class="day">28 Oct 2026</div>
+<div class="bubble">
+  Dear Customer, Rs.500.00 debited from A/c XX4321 on 28-10-2026 towards SMS/ATM charges. Avl Bal Rs.12,640.75. -SGB
+  <span class="time">10:12 AM</span>
+</div>
+
+<div class="day">Today</div>
+<div class="bubble">
+  Dear Customer, EMI of Rs.3,250.00 for Loan A/c XX7788 is due on 05-11-2026. Please maintain sufficient balance in A/c XX4321 to avoid penal charges of Rs.250. Never share OTP/PIN with anyone. -SGB
+  <span class="time">9:30 AM</span>
+</div>
+
+<div class="fake">SAMPLE SCREENSHOT · FAKE DATA</div>
+</body>
+</html>
