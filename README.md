@@ -124,6 +124,7 @@ frontend/
     components/          buttons, top bar, mic button, icons
 samples/                 fake bills and letters (HTML + PNG) and their correct answers
 scripts/                 smoke_test.py, check_extraction.py
+Dockerfile, render.yaml  deployment (see "Deploying")
 ```
 
 ## Setup
@@ -173,6 +174,30 @@ cloudflared tunnel --url http://localhost:8000
 
 Open the `https://….trycloudflare.com` address it prints on the phone. Anyone with the link
 can use the app (and your credits) while the tunnel runs, so stop it with Ctrl+C after the demo.
+
+## Deploying (Render)
+
+The repo includes a `Dockerfile` (builds the frontend and runs everything as one server) and a
+`render.yaml` Blueprint. Once it's set up, **every `git push` to `main` redeploys automatically**.
+
+One-time setup:
+
+1. Sign in at https://render.com with your GitHub account.
+2. **New → Blueprint**, pick this repository, and click **Apply**.
+3. When asked, fill in `GNANI_API_KEY`, `GEMINI_API_KEY`, and `GNANI_CREDIT_BUDGET` (the credits
+   left on your Gnani dashboard).
+4. Wait for the first build (a few minutes). The app is then live at `https://odhu-XXXX.onrender.com`,
+   with HTTPS, so the microphone works on phones.
+
+Things to know about the free plan:
+
+- It **sleeps after 15 minutes** without visitors; the next visit takes about a minute to wake it.
+  Open the link a minute before a demo.
+- History and cached audio are **reset on every redeploy or restart** (the free plan has no
+  permanent disk). Scanning works the same; repeated sentences just get spoken (and paid for) again.
+- The link is public: anyone who has it can use your Gnani credits and Gemini quota.
+
+To test the same image on your laptop: `docker build -t odhu . && docker run -p 8000:8000 --env-file .env odhu`.
 
 ## Testing
 

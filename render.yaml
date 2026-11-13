@@ -1,0 +1,30 @@
+# Render Blueprint: tells Render how to run Odhu.
+# Render builds the Dockerfile and redeploys automatically on every git push to main.
+services:
+  - type: web
+    name: odhu
+    runtime: docker
+    plan: free
+    region: singapore # closest Render region to India
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      # Secrets: Render asks for these once, when the Blueprint is first created.
+      - key: GNANI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      # Credits left on the Gnani dashboard when you deploy (the counter starts
+      # fresh on Render, because its database is separate from your laptop's).
+      - key: GNANI_CREDIT_BUDGET
+        sync: false
+      # Plain settings (same as .env.example).
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: GEMINI_FALLBACK_MODELS
+        value: gemini-3.1-flash-lite,gemini-3-flash-preview,gemini-3.6-flash
+      - key: TTS_VOICE
+        value: Shivani
+      - key: TTS_SPEED
+        value: "0.9"
