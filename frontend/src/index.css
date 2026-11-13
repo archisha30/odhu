@@ -2,31 +2,38 @@
  * Odhu styles. Designed for elderly users on phones:
  *  - big text (20px base, amounts 44px+), big buttons (at least 64px tall)
  *  - high contrast: every text colour passes WCAG AA, most pass AAA
- *  - warm "paper" background, deep teal for actions, marigold for money and dates
+ *  - bright, minimal look: white surfaces, one cobalt blue for actions, sunny yellow for money
  *  - gentle animations, all turned off if the phone asks for reduced motion
  */
 
 :root {
-  --bg: #fbf6ee; /* warm paper */
+  --bg: #f5f7fa; /* bright, cool off-white */
+  --bg-clear: rgba(245, 247, 250, 0); /* --bg, fully transparent (for fades) */
   --surface: #ffffff;
-  --ink: #1c1917; /* main text */
-  --ink-soft: #44403c; /* secondary text, still ~10:1 on white */
-  --border: #e7dfd3;
+  --ink: #14171f; /* main text */
+  --ink-soft: #4a5161; /* secondary text, ~8:1 on white */
+  --ink-faint: #8b93a3; /* steps not reached yet */
+  --border: #e2e6ee;
+  --track: #eceff4; /* background behind pill choices */
 
-  --primary: #0e5e55; /* deep teal: main actions (7.6:1 with white text) */
-  --primary-dark: #0a4741;
-  --primary-soft: #dcefeb;
+  --primary: #2348d6; /* cobalt blue: main actions (7.3:1 with white text) */
+  --primary-dark: #1a36a6;
+  --primary-soft: #ebf0ff;
+  --primary-border: #c9d5fb;
+  --shadow-primary: 0 8px 22px rgba(35, 72, 214, 0.28);
 
-  --accent: #f2a23a; /* marigold: highlights */
-  --accent-soft: #fff1d6;
-  --accent-ink: #7a3e00; /* text on marigold-soft (7:1) */
+  --accent: #ffc53d; /* sunny yellow: Listen button and money */
+  --accent-soft: #fff7dc;
+  --accent-border: #f8df92;
+  --accent-ink: #7a4a00; /* text on accent-soft (7:1) */
 
-  --danger: #b42318;
+  --danger: #c02a1d;
   --danger-soft: #fdecea;
-  --record: #d92d20;
+  --danger-border: #f6c9c4;
+  --record: #e0362a;
 
   --radius: 22px;
-  --shadow: 0 2px 6px rgba(28, 25, 23, 0.06), 0 8px 24px rgba(28, 25, 23, 0.08);
+  --shadow: 0 1px 2px rgba(20, 23, 31, 0.05), 0 8px 24px rgba(20, 23, 31, 0.07);
 
   /* Noto Sans first for English letters; Kannada and Hindi letters fall back to their own fonts. */
   font-family: 'Noto Sans', 'Noto Sans Kannada', 'Noto Sans Devanagari', system-ui, sans-serif;
@@ -114,9 +121,9 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: max(12px, env(safe-area-inset-top)) 16px 12px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: #fff;
-  box-shadow: 0 2px 10px rgba(10, 71, 65, 0.25);
+  background: var(--surface);
+  color: var(--ink);
+  border-bottom: 1px solid var(--border);
   /* The top bar keeps the same size in large-text mode (its children use em, not
      rem), so the Home button, A+ and the app name always fit on one line. */
   font-size: 20px;
@@ -133,10 +140,10 @@ a {
   min-width: 52px;
   min-height: 48px;
   padding: 0 12px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid var(--border);
   border-radius: 999px;
-  background: transparent;
-  color: #fff;
+  background: var(--surface);
+  color: var(--ink);
   font: inherit;
   font-size: 1.05em;
   font-weight: 800;
@@ -160,9 +167,9 @@ a {
 }
 
 .text-toggle-on {
-  background: #fff;
-  color: var(--primary-dark);
-  border-color: #fff;
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
 }
 
 .brand {
@@ -180,8 +187,8 @@ a {
   border-radius: 12px;
   display: grid;
   place-items: center;
-  background: var(--accent);
-  color: var(--ink);
+  background: var(--primary);
+  color: #fff;
   font-size: 1.3em;
 }
 
@@ -192,7 +199,8 @@ a {
   min-height: 48px;
   padding: 0 14px 0 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--track);
+  color: var(--ink);
   text-decoration: none;
   font-weight: 600;
   font-size: 1em;
@@ -236,7 +244,7 @@ a {
 .btn-primary {
   background: var(--primary);
   color: #fff;
-  box-shadow: 0 6px 18px rgba(14, 94, 85, 0.35);
+  box-shadow: var(--shadow-primary);
 }
 
 .btn-primary:hover {
@@ -269,7 +277,7 @@ a {
   gap: 10px;
   font-size: 1.35rem;
   border-radius: 28px;
-  background: radial-gradient(circle at 30% 20%, #17786d 0%, var(--primary) 55%, var(--primary-dark) 100%);
+  background: var(--primary);
 }
 
 .btn-small {
@@ -283,7 +291,7 @@ a {
 .btn-listen {
   background: var(--accent);
   color: var(--ink);
-  box-shadow: 0 6px 16px rgba(242, 162, 58, 0.35);
+  box-shadow: 0 6px 16px rgba(230, 170, 30, 0.3);
 }
 
 .btn-playing {
@@ -370,7 +378,7 @@ a {
   gap: 6px;
   padding: 6px;
   border-radius: 999px;
-  background: #efe6d8;
+  background: var(--track);
 }
 
 .lang-option {
@@ -435,13 +443,13 @@ button.lang-option.lang-selected {
 .banner-warn {
   background: var(--accent-soft);
   color: var(--accent-ink);
-  border: 2px solid #f6d49a;
+  border: 2px solid var(--accent-border);
 }
 
 .banner-error {
   background: var(--danger-soft);
   color: var(--danger);
-  border: 2px solid #f6c9c4;
+  border: 2px solid var(--danger-border);
 }
 
 /* ---------- Loading ---------- */
@@ -496,7 +504,7 @@ button.lang-option.lang-selected {
   height: 6px;
   border-radius: 6px;
   background: var(--primary);
-  box-shadow: 0 0 18px 4px rgba(14, 94, 85, 0.45);
+  box-shadow: 0 0 18px 4px rgba(35, 72, 214, 0.4);
   animation: scan 2s ease-in-out infinite;
 }
 
@@ -515,7 +523,7 @@ button.lang-option.lang-selected {
   gap: 12px;
   text-align: left;
   font-size: 1.1rem;
-  color: #8a8178;
+  color: var(--ink-faint);
 }
 
 .steps li {
@@ -629,7 +637,7 @@ button.lang-option.lang-selected {
 .fact-amount {
   background: var(--accent-soft);
   color: var(--accent-ink);
-  border: 2px solid #f6d49a;
+  border: 2px solid var(--accent-border);
 }
 
 .fact-amount .fact-value {
@@ -639,7 +647,7 @@ button.lang-option.lang-selected {
 .fact-date {
   background: var(--primary-soft);
   color: var(--primary-dark);
-  border: 2px solid #b9dcd5;
+  border: 2px solid var(--primary-border);
 }
 
 .fact-date .fact-value {
@@ -665,7 +673,7 @@ button.lang-option.lang-selected {
 
 .fact-urgent {
   background: var(--danger-soft);
-  border-color: #f6c9c4;
+  border-color: var(--danger-border);
   color: var(--danger);
 }
 
@@ -778,7 +786,7 @@ button.lang-option.lang-selected {
   bottom: 0;
   z-index: 5;
   padding: 18px 16px max(10px, env(safe-area-inset-bottom));
-  background: linear-gradient(to top, var(--bg) 78%, rgba(251, 246, 238, 0));
+  background: linear-gradient(to top, var(--bg) 78%, var(--bg-clear));
 }
 
 .mic-area {
@@ -814,7 +822,7 @@ button.lang-option.lang-selected {
   font-weight: 800;
   line-height: 1.25;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(14, 94, 85, 0.4);
+  box-shadow: var(--shadow-primary);
   transition: transform 0.12s ease, background-color 0.2s ease;
 }
 
@@ -975,7 +983,7 @@ button.lang-option.lang-selected {
 .skeleton {
   height: 88px;
   border-radius: var(--radius);
-  background: linear-gradient(90deg, #efe6d8 25%, #f7f0e5 50%, #efe6d8 75%);
+  background: linear-gradient(90deg, var(--track) 25%, #f7f9fc 50%, var(--track) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
 }
@@ -1102,10 +1110,10 @@ button.lang-option.lang-selected {
 
 @keyframes pulse-ring {
   0% {
-    box-shadow: 0 0 0 0 rgba(242, 162, 58, 0.7);
+    box-shadow: 0 0 0 0 rgba(255, 197, 61, 0.75);
   }
   100% {
-    box-shadow: 0 0 0 18px rgba(242, 162, 58, 0);
+    box-shadow: 0 0 0 18px rgba(255, 197, 61, 0);
   }
 }
 
@@ -1308,6 +1316,6 @@ button.lang-option.lang-selected {
     margin-left: calc(50% + 14px);
     margin-right: 0;
     padding-top: 14px;
-    background: linear-gradient(to top, var(--bg) 75%, rgba(251, 246, 238, 0));
+    background: linear-gradient(to top, var(--bg) 75%, var(--bg-clear));
   }
 }
