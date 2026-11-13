@@ -2,38 +2,45 @@
  * Odhu styles. Designed for elderly users on phones:
  *  - big text (20px base, amounts 44px+), big buttons (at least 64px tall)
  *  - high contrast: every text colour passes WCAG AA, most pass AAA
- *  - bright, minimal look: white surfaces, one cobalt blue for actions, sunny yellow for money
+ *  - neat and minimal: white cards on a light background, a fresh green for
+ *    actions, golden yellow for money and the Listen button
+ *  - few boxes: related things share one card instead of each getting its own
+ *  - one set of corner radii everywhere (cards, buttons, inner panels, chips)
  *  - gentle animations, all turned off if the phone asks for reduced motion
  */
 
 :root {
-  --bg: #f5f7fa; /* bright, cool off-white */
-  --bg-clear: rgba(245, 247, 250, 0); /* --bg, fully transparent (for fades) */
+  --bg: #f6f8f6; /* light background with a hint of green */
+  --bg-clear: rgba(246, 248, 246, 0); /* --bg, fully transparent (for fades) */
   --surface: #ffffff;
-  --ink: #14171f; /* main text */
-  --ink-soft: #4a5161; /* secondary text, ~8:1 on white */
-  --ink-faint: #8b93a3; /* steps not reached yet */
-  --border: #e2e6ee;
-  --track: #eceff4; /* background behind pill choices */
+  --soft: #f1f5f2; /* subtle fill, e.g. pressed rows */
+  --ink: #16201b; /* main text */
+  --ink-soft: #4a5650; /* secondary text, ~8:1 on white */
+  --ink-faint: #8a958f; /* steps not reached yet */
+  --border: #e1e7e3;
 
-  --primary: #2348d6; /* cobalt blue: main actions (7.3:1 with white text) */
-  --primary-dark: #1a36a6;
-  --primary-soft: #ebf0ff;
-  --primary-border: #c9d5fb;
-  --shadow-primary: 0 8px 22px rgba(35, 72, 214, 0.28);
+  --primary: #15745f; /* fresh green: main actions (5.7:1 with white text) */
+  --primary-dark: #0f5e4c;
+  --primary-soft: #e3f1eb;
+  --primary-border: #bfe0d3;
+  --shadow-primary: 0 6px 18px rgba(21, 116, 95, 0.25);
 
-  --accent: #ffc53d; /* sunny yellow: Listen button and money */
+  --accent: #ffc53d; /* golden: Listen button, money, badges */
   --accent-soft: #fff7dc;
   --accent-border: #f8df92;
   --accent-ink: #7a4a00; /* text on accent-soft (7:1) */
 
   --danger: #c02a1d;
   --danger-soft: #fdecea;
-  --danger-border: #f6c9c4;
   --record: #e0362a;
 
-  --radius: 22px;
-  --shadow: 0 1px 2px rgba(20, 23, 31, 0.05), 0 8px 24px rgba(20, 23, 31, 0.07);
+  /* Corner radii: the same four everywhere. */
+  --r-card: 20px; /* cards and panels */
+  --r-btn: 18px; /* buttons */
+  --r-inner: 14px; /* boxes inside a card */
+  --r-full: 999px; /* chips and badges */
+
+  --shadow: 0 1px 2px rgba(22, 32, 27, 0.05), 0 6px 20px rgba(22, 32, 27, 0.06);
 
   /* Noto Sans first for English letters; Kannada and Hindi letters fall back to their own fonts. */
   font-family: 'Noto Sans', 'Noto Sans Kannada', 'Noto Sans Devanagari', system-ui, sans-serif;
@@ -104,7 +111,7 @@ a {
 .stack {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .page-title {
@@ -120,10 +127,13 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: max(12px, env(safe-area-inset-top)) 16px 12px;
-  background: var(--surface);
-  color: var(--ink);
-  border-bottom: 1px solid var(--border);
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: 12px;
+  /* On wide screens, line the top bar up with the page content. */
+  padding-left: max(16px, calc((100vw - 1040px) / 2));
+  padding-right: max(16px, calc((100vw - 1040px) / 2));
+  background: var(--primary);
+  color: #fff;
   /* The top bar keeps the same size in large-text mode (its children use em, not
      rem), so the Home button, A+ and the app name always fit on one line. */
   font-size: 20px;
@@ -135,15 +145,28 @@ a {
   gap: 10px;
 }
 
+.topbar-home {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 0 14px 0 8px;
+  border-radius: var(--r-inner);
+  background: rgba(255, 255, 255, 0.16);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1em;
+}
+
 /* The quick "A+" large-text button in the top bar. */
 .text-toggle {
   min-width: 52px;
   min-height: 48px;
   padding: 0 12px;
-  border: 2px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--ink);
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--r-full);
+  background: transparent;
+  color: #fff;
   font: inherit;
   font-size: 1.05em;
   font-weight: 800;
@@ -167,9 +190,9 @@ a {
 }
 
 .text-toggle-on {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
+  background: #fff;
+  color: var(--primary-dark);
+  border-color: #fff;
 }
 
 .brand {
@@ -187,23 +210,9 @@ a {
   border-radius: 12px;
   display: grid;
   place-items: center;
-  background: var(--primary);
-  color: #fff;
-  font-size: 1.3em;
-}
-
-.topbar-home {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 48px;
-  padding: 0 14px 0 8px;
-  border-radius: 999px;
-  background: var(--track);
+  background: var(--accent);
   color: var(--ink);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1em;
+  font-size: 1.3em;
 }
 
 /* ---------- Buttons ---------- */
@@ -217,7 +226,7 @@ a {
   min-height: 68px;
   padding: 14px 20px;
   border: 0;
-  border-radius: var(--radius);
+  border-radius: var(--r-btn);
   font: inherit;
   font-size: 1.15rem;
   font-weight: 700;
@@ -254,7 +263,7 @@ a {
 .btn-secondary {
   background: var(--surface);
   color: var(--primary-dark);
-  border: 3px solid var(--primary);
+  border: 2px solid var(--primary);
 }
 
 .btn-ghost {
@@ -276,8 +285,6 @@ a {
   flex-direction: column;
   gap: 10px;
   font-size: 1.35rem;
-  border-radius: 28px;
-  background: var(--primary);
 }
 
 .btn-small {
@@ -285,13 +292,11 @@ a {
   width: auto;
   padding: 8px 18px;
   font-size: 1rem;
-  border-radius: 999px;
 }
 
 .btn-listen {
   background: var(--accent);
   color: var(--ink);
-  box-shadow: 0 6px 16px rgba(230, 170, 30, 0.3);
 }
 
 .btn-playing {
@@ -312,8 +317,8 @@ a {
 
 .hero-art {
   position: relative;
-  width: clamp(80px, 12vh, 120px);
-  height: clamp(80px, 12vh, 120px);
+  width: clamp(80px, 12vh, 112px);
+  height: clamp(80px, 12vh, 112px);
   border-radius: 50%;
   background: var(--accent-soft);
   display: grid;
@@ -321,16 +326,12 @@ a {
 }
 
 .hero-paper {
-  width: 54px;
-  height: 68px;
-  border-radius: 6px;
+  width: 50px;
+  height: 64px;
+  border-radius: 8px;
   background: var(--surface);
   box-shadow: var(--shadow);
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0 12px,
-    var(--border) 12px 15px
-  );
+  background-image: repeating-linear-gradient(to bottom, transparent 0 12px, var(--border) 12px 15px);
   background-size: 70% 100%;
   background-repeat: no-repeat;
   background-position: center 10px;
@@ -340,10 +341,10 @@ a {
 /* Sound waves coming out of the paper: "we read it out loud". */
 .hero-wave {
   position: absolute;
-  right: 10px;
-  top: 34px;
-  width: 30px;
-  height: 46px;
+  right: 8px;
+  top: 32px;
+  width: 28px;
+  height: 44px;
   border: 4px solid var(--primary);
   border-left: 0;
   border-top-color: transparent;
@@ -360,6 +361,10 @@ a {
   max-width: 22ch;
 }
 
+/* ---------- Language choice (Home and "Hear it in") ----------
+   One simple row: no box behind it. The chosen language is a filled green chip,
+   the others are plain words, so there's exactly one thing that stands out. */
+
 .lang {
   border: 0;
   margin: 0;
@@ -367,49 +372,32 @@ a {
 }
 
 .lang legend {
+  font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--ink-soft);
 }
 
 .lang-options {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 6px;
-  padding: 6px;
-  border-radius: 999px;
-  background: var(--track);
 }
 
 .lang-option {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 60px;
+  min-height: 56px;
+  padding: 0 8px;
+  border-radius: var(--r-full);
+  font-size: 1.2rem;
+  font-weight: 700;
   line-height: 1.2;
   text-align: center;
-  border-radius: 999px;
-  font-size: 1.25rem;
-  font-weight: 700;
   color: var(--ink-soft);
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Button versions of the language pills (the "Hear it in" row). */
-button.lang-option {
-  border: 0;
-  background: transparent;
-  font: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--ink-soft);
-  gap: 8px;
-}
-
-button.lang-option.lang-selected {
-  background: var(--surface);
-  color: var(--primary-dark);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .lang-option input {
@@ -422,10 +410,34 @@ button.lang-option.lang-selected {
   outline: 4px solid var(--accent);
 }
 
-.lang-selected {
-  background: var(--surface);
-  color: var(--primary-dark);
-  box-shadow: var(--shadow);
+.lang-option:hover {
+  background: var(--soft);
+}
+
+.lang-selected,
+.lang-selected:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Button versions of the language chips (the "Hear it in" row). */
+button.lang-option {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+button.lang-option.lang-selected {
+  background: var(--primary);
+  color: #fff;
+}
+
+.lang-option:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 /* ---------- Banners ---------- */
@@ -435,21 +447,24 @@ button.lang-option.lang-selected {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 16px;
-  border-radius: 16px;
+  padding: 14px 16px;
+  border-radius: var(--r-inner);
   font-weight: 600;
+  font-size: 1rem;
+}
+
+.banner svg {
+  flex: none;
 }
 
 .banner-warn {
   background: var(--accent-soft);
   color: var(--accent-ink);
-  border: 2px solid var(--accent-border);
 }
 
 .banner-error {
   background: var(--danger-soft);
   color: var(--danger);
-  border: 2px solid var(--danger-border);
 }
 
 /* ---------- Loading ---------- */
@@ -471,7 +486,7 @@ button.lang-option.lang-selected {
 .scanner-paper {
   position: absolute;
   inset: 0;
-  border-radius: 14px;
+  border-radius: var(--r-inner);
   background: var(--surface);
   box-shadow: var(--shadow);
   padding: 30px 22px;
@@ -483,7 +498,7 @@ button.lang-option.lang-selected {
 .scanner-paper i {
   display: block;
   height: 10px;
-  border-radius: 6px;
+  border-radius: var(--r-full);
   background: var(--border);
 }
 
@@ -502,9 +517,9 @@ button.lang-option.lang-selected {
   left: -10px;
   right: -10px;
   height: 6px;
-  border-radius: 6px;
+  border-radius: var(--r-full);
   background: var(--primary);
-  box-shadow: 0 0 18px 4px rgba(35, 72, 214, 0.4);
+  box-shadow: 0 0 18px 4px rgba(21, 116, 95, 0.4);
   animation: scan 2s ease-in-out infinite;
 }
 
@@ -561,7 +576,9 @@ button.lang-option.lang-selected {
   border-color: var(--primary);
 }
 
-/* ---------- Result ---------- */
+/* ---------- Result: the document card ----------
+   One card holds everything about the document: what it is, the amount and date,
+   Listen, the language choice and the explanation. */
 
 .result {
   padding-bottom: 8px;
@@ -569,12 +586,12 @@ button.lang-option.lang-selected {
 
 .doc-card {
   background: var(--surface);
-  border-radius: var(--radius);
+  border-radius: var(--r-card);
   box-shadow: var(--shadow);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .doc-type {
@@ -587,7 +604,7 @@ button.lang-option.lang-selected {
   width: 56px;
   height: 56px;
   flex: none;
-  border-radius: 16px;
+  border-radius: var(--r-inner);
   display: grid;
   place-items: center;
   background: var(--primary-soft);
@@ -600,14 +617,16 @@ button.lang-option.lang-selected {
   font-size: 1rem;
 }
 
+/* Amount and date share one panel, split by a thin line. */
 .facts {
   display: grid;
-  gap: 12px;
+  border: 2px solid var(--border);
+  border-radius: var(--r-inner);
+  overflow: hidden;
 }
 
 .fact {
-  border-radius: 18px;
-  padding: 16px 18px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -615,9 +634,14 @@ button.lang-option.lang-selected {
   gap: 4px;
 }
 
+.fact + .fact {
+  border-top: 2px solid var(--border);
+}
+
 .fact-label {
   font-size: 1rem;
   font-weight: 600;
+  color: var(--ink-soft);
 }
 
 .fact-value {
@@ -626,6 +650,7 @@ button.lang-option.lang-selected {
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.5px;
+  color: var(--ink);
   /* "19 November" and the smaller year sit on one line, and wrap centred if too long. */
   display: flex;
   flex-wrap: wrap;
@@ -636,23 +661,14 @@ button.lang-option.lang-selected {
 
 .fact-amount {
   background: var(--accent-soft);
+}
+
+.fact-amount .fact-label {
   color: var(--accent-ink);
-  border: 2px solid var(--accent-border);
-}
-
-.fact-amount .fact-value {
-  color: var(--ink);
-}
-
-.fact-date {
-  background: var(--primary-soft);
-  color: var(--primary-dark);
-  border: 2px solid var(--primary-border);
 }
 
 .fact-date .fact-value {
-  color: var(--ink);
-  font-size: 1.9rem;
+  font-size: min(1.9rem, 11vw);
 }
 
 .fact-year {
@@ -661,44 +677,79 @@ button.lang-option.lang-selected {
   color: var(--ink-soft);
 }
 
+/* The golden "5 days left" badge. */
 .badge {
-  margin-top: 6px;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: var(--primary);
-  color: #fff;
+  margin-top: 4px;
+  padding: 4px 14px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  color: var(--ink);
   font-size: 0.95rem;
   font-weight: 700;
 }
 
-.fact-urgent {
-  background: var(--danger-soft);
-  border-color: var(--danger-border);
-  color: var(--danger);
-}
-
 .fact-urgent .badge {
   background: var(--danger);
+  color: #fff;
   animation: pulse-soft 1.6s ease-in-out infinite;
 }
 
+/* "Hear it in" sits inside the card, under Listen. */
+.hear-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.hear-in-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.hear-in-options {
+  width: 100%;
+}
+
+.hear-in-options .lang-option {
+  min-height: 52px;
+}
+
+/* The explanation: plain text at the bottom of the card, under a thin line. */
 .speech-text {
   margin: 0;
-  padding: 18px 20px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  border-top: 6px solid var(--accent);
-  box-shadow: var(--shadow);
+  padding-top: 16px;
+  border-top: 2px solid var(--border);
   font-size: 1.15rem;
   line-height: 1.7;
   text-align: center;
 }
 
-/* Questions and answers, shown like a chat. */
-.chat {
+.speech-preparing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Result: the conversation ---------- */
+
+.conversation {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
+}
+
+/* "Tap, speak, tap again": only shown on wide screens, where the mic hint
+   isn't right under the empty conversation. */
+.conversation-empty {
+  display: none;
+  margin: auto 0;
+  text-align: center;
+  color: var(--ink-soft);
+  font-weight: 600;
 }
 
 .qa {
@@ -710,7 +761,7 @@ button.lang-option.lang-selected {
 .bubble {
   max-width: 92%;
   padding: 14px 18px;
-  border-radius: 20px;
+  border-radius: var(--r-card);
   font-size: 1.1rem;
   line-height: 1.6;
 }
@@ -723,7 +774,6 @@ button.lang-option.lang-selected {
   align-self: flex-end;
   background: var(--primary);
   color: #fff;
-  border-bottom-right-radius: 6px;
 }
 
 .bubble-label {
@@ -735,25 +785,18 @@ button.lang-option.lang-selected {
 
 .bubble-app {
   align-self: flex-start;
+  background: var(--surface);
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px; /* even spacing between the answer text and its Listen button */
-  background: var(--surface);
-  border: 2px solid var(--border);
-  border-bottom-left-radius: 6px;
 }
 
 .bubble-thinking {
-  display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 12px;
   color: var(--ink-soft);
-}
-
-/* Scrolling to the newest answer leaves room for the microphone dock below it. */
-.scroll-anchor {
-  scroll-margin-bottom: 230px;
 }
 
 .dots {
@@ -775,6 +818,11 @@ button.lang-option.lang-selected {
 
 .dots i:nth-child(3) {
   animation-delay: 0.3s;
+}
+
+/* Scrolling to the newest answer leaves room for the microphone dock below it. */
+.scroll-anchor {
+  scroll-margin-bottom: 230px;
 }
 
 /* ---------- Microphone dock ---------- */
@@ -799,9 +847,8 @@ button.lang-option.lang-selected {
   gap: 6px;
 }
 
-/* A wide pill button: easy to hit, and much shorter than a big circle, so more
-   of the document stays on screen. While recording, the bar fills up to show
-   how much of the 30 seconds is used. */
+/* A wide button: easy to hit, and short enough to leave room for the document.
+   While recording it turns red and fills up as the 30 seconds are used. */
 .mic {
   --progress: 0;
   position: relative;
@@ -809,7 +856,7 @@ button.lang-option.lang-selected {
   min-height: 72px;
   padding: 10px 24px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--r-btn);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -828,6 +875,7 @@ button.lang-option.lang-selected {
 
 .mic svg {
   flex: none;
+  position: relative;
 }
 
 .mic:active:not(:disabled) {
@@ -847,7 +895,7 @@ button.lang-option.lang-selected {
 .mic-timer {
   position: relative;
   padding: 2px 10px;
-  border-radius: 999px;
+  border-radius: var(--r-full);
   background: rgba(255, 255, 255, 0.22);
   font-size: 1rem;
   font-variant-numeric: tabular-nums;
@@ -855,7 +903,7 @@ button.lang-option.lang-selected {
 
 .mic-recording {
   background: var(--record);
-  box-shadow: 0 8px 24px rgba(217, 45, 32, 0.45);
+  box-shadow: 0 6px 18px rgba(224, 54, 42, 0.4);
   animation: pulse-record 1.6s ease-out infinite;
 }
 
@@ -867,10 +915,6 @@ button.lang-option.lang-selected {
   width: calc(var(--progress) * 100%);
   background: rgba(0, 0, 0, 0.18);
   pointer-events: none;
-}
-
-.mic-recording svg {
-  position: relative;
 }
 
 .mic-hint {
@@ -896,7 +940,7 @@ button.lang-option.lang-selected {
   text-align: center;
   padding: 28px 20px;
   background: var(--surface);
-  border-radius: var(--radius);
+  border-radius: var(--r-card);
   box-shadow: var(--shadow);
 }
 
@@ -915,32 +959,43 @@ button.lang-option.lang-selected {
   color: var(--accent-ink);
 }
 
-/* ---------- History ---------- */
+/* The explanation inside this card doesn't need its own divider. */
+.problem .speech-text {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* ---------- History ----------
+   One white list with thin lines between rows, instead of a stack of cards. */
 
 .history-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  background: var(--surface);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.history-list > li + li,
+.history-list > .skeleton + .skeleton {
+  border-top: 1px solid var(--border);
 }
 
 .history-card {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px;
-  min-height: 88px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  padding: 16px 18px;
+  min-height: 84px;
   text-decoration: none;
-  transition: transform 0.12s ease;
+  transition: background-color 0.15s ease;
 }
 
+.history-card:hover,
 .history-card:active {
-  transform: scale(0.98);
+  background: var(--soft);
 }
 
 .history-card-muted .doc-icon {
@@ -981,9 +1036,8 @@ button.lang-option.lang-selected {
 }
 
 .skeleton {
-  height: 88px;
-  border-radius: var(--radius);
-  background: linear-gradient(90deg, var(--track) 25%, #f7f9fc 50%, var(--track) 75%);
+  height: 84px;
+  background: linear-gradient(90deg, var(--soft) 25%, #f9fbf9 50%, var(--soft) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
 }
@@ -1007,7 +1061,7 @@ button.lang-option.lang-selected {
 .sound-bars i {
   width: 5px;
   height: 100%;
-  border-radius: 3px;
+  border-radius: var(--r-full);
   background: currentColor;
   animation: bars 0.9s ease-in-out infinite;
   transform-origin: bottom;
@@ -1074,17 +1128,6 @@ button.lang-option.lang-selected {
   }
 }
 
-@keyframes ripple {
-  from {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  to {
-    transform: scale(1.35);
-    opacity: 0;
-  }
-}
-
 @keyframes bars {
   0%,
   100% {
@@ -1119,10 +1162,10 @@ button.lang-option.lang-selected {
 
 @keyframes pulse-record {
   0% {
-    box-shadow: 0 0 0 0 rgba(217, 45, 32, 0.55);
+    box-shadow: 0 0 0 0 rgba(224, 54, 42, 0.55);
   }
   100% {
-    box-shadow: 0 0 0 16px rgba(217, 45, 32, 0);
+    box-shadow: 0 0 0 16px rgba(224, 54, 42, 0);
   }
 }
 
@@ -1156,62 +1199,11 @@ button.lang-option.lang-selected {
   }
 }
 
-/* ---------- "Hear it in" language row on the Result screen ---------- */
-
-.hear-in {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.hear-in-label {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--ink-soft);
-}
-
-.hear-in-options {
-  width: 100%;
-}
-
-.hear-in-options .lang-option {
-  min-height: 52px;
-  font-size: 1.05rem;
-}
-
-.lang-option:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-.speech-preparing {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: var(--ink-soft);
-}
-
-/* The explanation text inside the unclear/unsupported card doesn't need its own box. */
-.problem .speech-text {
-  box-shadow: none;
-  border-top: 0;
-  padding: 0;
-}
-
-
 /* ======================================================================
    Responsive layout
    Phones are the main target. These rules make the app fit short phones,
    phones held sideways, tablets and desktop screens.
    ====================================================================== */
-
-/* Line the top bar up with the page content on wide screens. */
-.topbar {
-  padding-left: max(16px, calc((100vw - 1040px) / 2));
-  padding-right: max(16px, calc((100vw - 1040px) / 2));
-}
 
 /* Short screens (small phones): drop the decorative picture so the scan
    button and choices fit without scrolling. */
@@ -1253,53 +1245,62 @@ button.lang-option.lang-selected {
   }
 }
 
-/* Wide enough for the amount and date side by side (big phones sideways, tablets). */
+/* Wide enough for the amount and date side by side, split by a line. */
 @media (min-width: 600px) {
   .facts {
     grid-template-columns: 1fr 1fr;
-    align-items: stretch;
+  }
+
+  .fact + .fact {
+    border-top: 0;
+    border-left: 2px solid var(--border);
   }
 
   .fact-date .fact-value {
     font-size: min(1.9rem, 6vw);
   }
-}
 
-/* Tablets and desktops: History shows two cards per row. */
-@media (min-width: 760px) {
   .history-screen {
-    max-width: 960px;
-  }
-
-  .history-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    max-width: 720px;
   }
 }
 
-/* Desktops, and phones/tablets held sideways: the Result screen uses two columns.
-   Left: the document card. Right: the explanation and the questions. */
+/* Desktops, and phones/tablets held sideways: a 50/50 split.
+   Left: the document card. Right: the conversation panel, with the mic under it. */
 @media (min-width: 900px), (min-width: 700px) and (orientation: landscape) {
   .result {
     max-width: 1040px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 28px;
-    align-content: start;
-  }
-
-  .result > * {
-    grid-column: 2;
-  }
-
-  .result > .doc-card {
-    grid-column: 1;
-    grid-row: 1 / span 50;
-    align-self: start;
+    align-items: start;
   }
 
   .result .facts {
-    grid-template-columns: 1fr; /* the left column is narrow again */
+    grid-template-columns: 1fr; /* each half is narrow again */
+  }
+
+  .result .fact + .fact {
+    border-left: 0;
+    border-top: 2px solid var(--border);
+  }
+
+  /* The conversation becomes a panel of its own. */
+  .conversation {
+    background: var(--surface);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    min-height: 240px;
+  }
+
+  .conversation-empty {
+    display: block;
+  }
+
+  .bubble-app {
+    background: var(--soft);
+    box-shadow: none;
   }
 
   /* The mic sits under the right column, and its fade only covers that column,
@@ -1317,5 +1318,26 @@ button.lang-option.lang-selected {
     margin-right: 0;
     padding-top: 14px;
     background: linear-gradient(to top, var(--bg) 75%, var(--bg-clear));
+  }
+}
+
+/* Tall enough desktop screens: both halves fit the screen and scroll inside
+   themselves, so the page itself barely scrolls. */
+@media (min-width: 900px) and (min-height: 620px) {
+  .result > .doc-card,
+  .result > .conversation {
+    max-height: calc(100dvh - 250px);
+    overflow-y: auto;
+  }
+
+  .result > .conversation {
+    height: calc(100dvh - 250px);
+  }
+
+  /* Inside a scrolling half, keep every block at its natural height
+     (otherwise the browser squeezes them, e.g. the amount and date panel). */
+  .result > .doc-card > *,
+  .result > .conversation > * {
+    flex-shrink: 0;
   }
 }

@@ -138,7 +138,7 @@ export function Result({ t, language, doc, autoplay, onAutoplayed, onPhoto, onDo
       <span>{t.errors[explainError]}</span>
     </div>
   ) : current ? (
-    <p className="speech-text fade-up delay-1" lang={hearLang}>
+    <p className="speech-text" lang={hearLang}>
       {current.explanation}
     </p>
   ) : null
@@ -177,53 +177,53 @@ export function Result({ t, language, doc, autoplay, onAutoplayed, onPhoto, onDo
             </div>
           )}
 
+          {(facts.legibility === 'partly_readable' || facts.confidence < 0.8) && (
+            <div className="banner banner-warn" role="note">
+              <Icon name="alert" />
+              <span>{t.checkPaper}</span>
+            </div>
+          )}
+
           {listen}
           {hearIn}
+          {speech}
         </section>
 
-        {(facts.legibility === 'partly_readable' || facts.confidence < 0.8) && (
-          <div className="banner banner-warn fade-up delay-1" role="note">
-            <Icon name="alert" />
-            <span>{t.checkPaper}</span>
-          </div>
-        )}
+        {/* The conversation: on wide screens this is the right half of the page. */}
+        <section className="conversation" aria-label={t.ask}>
+          {doc.questions.length === 0 && !asking && <p className="conversation-empty">{t.askHint}</p>}
 
-        {speech}
-
-        {doc.questions.length > 0 && (
-          <section className="chat" aria-label={t.ask}>
-            {doc.questions.map((question) => (
-              <div key={question.id} className="qa fade-up">
-                <div className="bubble bubble-user" lang={question.language ?? undefined}>
-                  <span className="bubble-label">{t.youAsked}</span>
-                  {question.transcript || '…'}
-                </div>
-                <div className="bubble bubble-app" lang={question.language ?? doc.language}>
-                  <p>{question.answer}</p>
-                  {question.audio_url && <AudioButton url={question.audio_url} t={t} small />}
-                </div>
+          {doc.questions.map((question) => (
+            <div key={question.id} className="qa fade-up">
+              <div className="bubble bubble-user" lang={question.language ?? undefined}>
+                <span className="bubble-label">{t.youAsked}</span>
+                {question.transcript || '…'}
               </div>
-            ))}
-          </section>
-        )}
+              <div className="bubble bubble-app" lang={question.language ?? doc.language}>
+                <p>{question.answer}</p>
+                {question.audio_url && <AudioButton url={question.audio_url} t={t} small />}
+              </div>
+            </div>
+          ))}
 
-        {asking && (
-          <div className="bubble bubble-app bubble-thinking fade-up" aria-live="polite">
-            <span className="dots" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-            </span>
-            {t.thinking}
-          </div>
-        )}
-        {askError && (
-          <div className="banner banner-error" role="alert">
-            <Icon name="alert" />
-            <span>{t.errors[askError]}</span>
-          </div>
-        )}
-        <div ref={endRef} className="scroll-anchor" />
+          {asking && (
+            <div className="bubble bubble-app bubble-thinking fade-up" aria-live="polite">
+              <span className="dots" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+              {t.thinking}
+            </div>
+          )}
+          {askError && (
+            <div className="banner banner-error" role="alert">
+              <Icon name="alert" />
+              <span>{t.errors[askError]}</span>
+            </div>
+          )}
+          <div ref={endRef} className="scroll-anchor" />
+        </section>
       </main>
 
       <footer className="dock">
