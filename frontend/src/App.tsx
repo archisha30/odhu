@@ -24,7 +24,7 @@ function parseRoute(hash: string): Route {
 }
 
 // The chosen language is remembered on this phone. Storage can fail (private
-// mode), so every access is wrapped in try/catch and Kannada is the default.
+// mode), so every access is wrapped in try/catch and English is the default.
 function loadLanguage(): Language {
   try {
     const saved = localStorage.getItem('odhu-language')
@@ -32,7 +32,7 @@ function loadLanguage(): Language {
   } catch {
     // ignore
   }
-  return 'kn-IN'
+  return 'en-IN'
 }
 
 function saveLanguage(language: Language) {
